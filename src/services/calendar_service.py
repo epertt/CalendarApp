@@ -4,6 +4,4 @@ class CalendarService:
     def get_user():
     def login():
     def logout():
-
-
     
