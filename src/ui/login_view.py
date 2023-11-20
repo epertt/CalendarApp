@@ -1,10 +1,13 @@
 from tkinter import ttk, constants
+from services.calendar_service import calendar_service, InvalidCredentialsError
 
 class LoginView:
 
-    def __init__(self, root):
+    def __init__(self, root, calendar_view):
         self._root = root
         self._root.title("Login")
+
+        self._show_calendar_view = calendar_view
 
         self._login_frame = None
 
@@ -33,7 +36,7 @@ class LoginView:
         self._password_field.grid(row=1, column=1, pady=5, padx=5, columnspan=2, sticky=constants.E)
 
     def _init_buttons(self):
-        self.login_button = ttk.Button(self._login_frame, text="login", command=lambda: self._handle_login_button())
+        self.login_button = ttk.Button(self._login_frame, text="login", command=lambda: self._handle_login())
         self.login_button.grid(row=2, column=0, columnspan=3, pady=5, sticky=(constants.W, constants.E))
         self.login_button.grid_columnconfigure(1, weight=1)
 
@@ -46,7 +49,12 @@ class LoginView:
 
         self._login_frame.columnconfigure(0, weight=1)
 
-    def _handle_login_button(self):
+    def _handle_login(self):
         username = self._username_field.get()
         password = self._password_field.get()
-        print(f"username: {username}\npassword: {password}")
+
+        try:
+            calendar_service.login(username, password)
+            self._show_calendar_view()
+        except InvalidCredentialsError:
+            print("ruh roh: _handle_login @ login_view.py")
