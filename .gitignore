@@ -1,6 +1,10 @@
 # temporarily ignore this for testing
 teststuff/
 
+# other files
+db.sqlite
+
+##  Automatically created by GitHub
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
