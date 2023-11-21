@@ -11,8 +11,8 @@ def initialize_for_testing():
     cursor = connection.cursor()
     cursor.execute("drop table if exists users;")
     cursor.execute("create table users ( username text primary key, password text );")
-    cursor.execute("insert into users(username, password) values('user', 'pass');")
+#    cursor.execute("insert into users(username, password) values('user', 'pass');")
     connection.commit()
 
-if __name__ == "__main__":
-    initialize_for_testing()
+#if __name__ == "__main__":
+initialize_for_testing()
