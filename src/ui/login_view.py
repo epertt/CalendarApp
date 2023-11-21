@@ -21,15 +21,14 @@ class LoginView:
         self._init()
 
     def pack(self):
-        self._login_frame.pack(fill=constants.NONE, expand=True)
+        self._login_frame.pack(fill=constants.BOTH, expand=True)
 
     def destroy(self):
         self._login_frame.destroy()
 
     def _init_help_message(self, text1="enter username and password to log in", text2="account will be created if it doesn't exist"):
-        if self.account_created_label1 != None and self.account_created_label2 != None:
-            self.account_created_label1.destroy()
-            self.account_created_label2.destroy()
+        self.account_created_label1.destroy() if self.account_created_label1 is not None else None
+        self.account_created_label2.destroy() if self.account_created_label2 is not None else None
 
         self.account_created_label1 = ttk.Label(self._login_frame, text=text1, justify=constants.CENTER)
         self.account_created_label2 = ttk.Label(self._login_frame, text=text2, justify=constants.CENTER)

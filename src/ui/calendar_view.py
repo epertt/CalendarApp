@@ -6,6 +6,8 @@ class CalendarView():
     def __init__(self, root, login_view):
         self._root = root
         self._root.title("Calendar")
+        self._root.geometry=("700x650")
+
         self._current_year = datetime.datetime.now().year
 
         self._show_login_view = login_view
@@ -18,12 +20,12 @@ class CalendarView():
         self._init()
 
     def pack(self):
-        self._main_frame.pack()
-        self._menu_frame.pack()
+        self._menu_frame.pack(fill=constants.BOTH)
+        self._main_frame.pack(fill=constants.BOTH)
 
     def destroy(self):
-        self._main_frame.destroy()
         self._menu_frame.destroy()
+        self._main_frame.destroy()
 
     def _log_out(self):
         self._show_login_view()
@@ -59,7 +61,7 @@ class CalendarView():
             month_calendar = calendar.monthcalendar(self._current_year, month)
 
             # a separate frame for each month is needed to use grid
-            month_frame = ttk.Frame(self._calendar_frame, borderwidth=1, relief="solid", width=month_frame_width, height=month_frame_height, padding=(6, 15, 0, 0))
+            month_frame = ttk.Frame(self._calendar_frame, borderwidth=1, relief="solid", width=month_frame_width, height=month_frame_height, padding=(3, 15, 0, 0))
             month_frame.grid(row=row, column=col, padx=10, pady=10)
             month_frame.grid_propagate(False)
 
@@ -72,7 +74,7 @@ class CalendarView():
             # under the month name there should be the weekdays (abbreviated so they
             # don't take too much space)
             for day_name in calendar.day_name:
-                day_label = ttk.Label(month_frame, text=day_name[:3], width=4)
+                day_label = ttk.Label(month_frame, text=day_name[:3], width=-3)
                 day_label.grid(row=1, column=list(calendar.day_name).index(day_name), pady=(0, 5))
 
             # under the abbreviated weekdays there should be a grid of days numbered from
@@ -99,11 +101,11 @@ class CalendarView():
     def _init(self):
         # frame for menus (configure, add/remove notes, help, logout)
         self._menu_frame = ttk.Frame(self._root)
-        self._menu_frame.pack(anchor=constants.NW)
 
         # main container frame
         self._main_frame = ttk.Frame(self._root)
-        self._main_frame.pack(fill=constants.NONE, expand=True)
+
+        self.pack()
         
         # frame that contains buttons like so: < {year} >
         # for going forward or back in time
