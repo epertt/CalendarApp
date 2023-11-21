@@ -1,6 +1,6 @@
 class Note:
 
-    __init__(self, date=None, user=None, content=None, identifier=None):
+    def __init__(self, date=None, user=None, content=None, identifier=None):
 
         self.date = date
         self.user = user
