@@ -9,9 +9,6 @@ __pycache__/
 htmlcov/
 .coverage
 
-# environment
-.env
-
 # temporarily ignore this for testing
 teststuff/
 
