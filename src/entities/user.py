@@ -5,3 +5,6 @@ class User:
 
     def __str__(self):
         return self.username
+
+    def __eq__(self, other):
+        return self.username == other.username and self.password == other.password

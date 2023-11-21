@@ -23,17 +23,15 @@ class UserRepository:
 
         return get_user_by_row(row)
 
-    def create_user(self, username, password):
+    def create_user(self, user):
 
         cursor = self._connection.cursor()
-        try:
-            cursor.execute(
-                'insert into users(username, password) values(?, ?)',
-                (username, password)
-            )
-        except IntegrityError:
-            return False
 
-        return True
+        cursor.execute(
+            'insert into users(username, password) values(?, ?)',
+            (user.username, user.password)
+        )
+
+        return user
 
 user_repository = UserRepository(get_db_connection())

@@ -1,7 +1,5 @@
 from ui.login_view import LoginView
 from ui.calendar_view import CalendarView
-from ui.create_user_view import CreateUserView
-
 
 class UI:
     def __init__(self, root):

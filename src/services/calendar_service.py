@@ -3,6 +3,10 @@ from entities.user import User
 from repositories.user_repository import user_repository as default_user_repository
 
 
+class UserExistsError(Exception):
+    pass
+
+
 class InvalidCredentialsError(Exception):
     pass
 
@@ -19,13 +23,17 @@ class CalendarService:
         return self._user_repository.find_user(username)
 
     def create_user(self, username, password):
-        return self._user_repository.create_user(username, password)
+        if self.get_user(username):
+            raise UserExistsError("username already exists")
+        else:
+            user = User(username, password)
+            return self._user_repository.create_user(user)
 
     def login(self, username, password):
         user = self._user_repository.find_user(username)
 
         if not user or user.password != password:
-            raise InvalidCredentialsError("Invalid username or password")
+            raise InvalidCredentialsError()
 
         self._user = user
 
