@@ -10,12 +10,16 @@ Simple multi-user calendar application that shows a single year, month or week, 
 ## Installation
 Requirements:
 - Python>=3.8
-- Poetry
+- Poetry (tested on 1.7.0)
 
 Clone the git repository and run the following commands on your terminal:
 ```
 poetry install
 poetry run invoke start
+```
+If you get an error while running any of the commands, your poetry installation is probably out of date. If on linux, update to a newer version using your distribution's package manager, or run the following to install poetry:
+```
+curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.local python3 -
 ```
 
 ## Testing:
