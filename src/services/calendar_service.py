@@ -1,17 +1,15 @@
-#from repositories.note_repository import note_repository
 from entities.user import User
 
-from repositories.user_repository import (
-    user_repository as default_user_repository
-)
+from repositories.user_repository import user_repository as default_user_repository
+
 
 class InvalidCredentialsError(Exception):
     pass
 
+
 class CalendarService:
     def __init__(self, user_repository=default_user_repository):
         self._user = None
-#        self._note_repository = note_repository
         self._user_repository = user_repository
 
     def get_date():
@@ -19,6 +17,9 @@ class CalendarService:
 
     def get_user(self, username):
         return self._user_repository.find_user(username)
+
+    def create_user(self, username, password):
+        return self._user_repository.create_user(username, password)
 
     def login(self, username, password):
         user = self._user_repository.find_user(username)
@@ -30,7 +31,8 @@ class CalendarService:
 
         return user
 
-    def logout():
-        pass
+    def logout(self):
+        self._user = None
+
 
 calendar_service = CalendarService()

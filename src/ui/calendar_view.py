@@ -3,10 +3,12 @@ import datetime
 from tkinter import Tk, ttk, constants
 
 class CalendarView():
-    def __init__(self, root):
+    def __init__(self, root, login_view):
         self._root = root
         self._root.title("Calendar")
         self._current_year = datetime.datetime.now().year
+
+        self._show_login_view = login_view
 
         self._menu_frame = None
         self._main_frame = None
@@ -16,17 +18,24 @@ class CalendarView():
         self._init()
 
     def pack(self):
+        self._main_frame.pack()
         self._menu_frame.pack()
 
     def destroy(self):
-        self._root_frame.destroy()
+        self._main_frame.destroy()
+        self._menu_frame.destroy()
+
+    def _log_out(self):
+        self._show_login_view()
 
     # wip, should be buttons instead, not functional
     def _display_menu(self):
         items = ["configuration", "add & remove notes", "help", "log out"]
+        buttons = {}
         for i, item in enumerate(items):
-            foo = ttk.Label(master=self._menu_frame, text=item, padding=5, borderwidth=1, relief="solid", cursor="hand2")
-            foo.grid(row=0, column=i, padx=5, pady=10)
+            buttons[item] = ttk.Button(master=self._menu_frame, text=item, padding=5, cursor="hand2")
+            buttons[item].grid(row=0, column=i, padx=5, pady=10)
+        buttons["log out"].bind("<Button-1>", lambda event: self._log_out())
 
     # wip, should be buttons instead, not functional
     def _display_year_menu(self, year):
