@@ -54,7 +54,7 @@ class CalendarView():
 
         # fixed size for each month frame; though not ideal, still looks better 
         # than having mismatched heights for months
-        month_frame_width = 220
+        month_frame_width = 200
         month_frame_height = 200
         
         for month in month_range:
