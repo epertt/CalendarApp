@@ -1,5 +1,6 @@
-# database file
-db.sqlite
+# database files
+*.sqlite
+*.sqlite-journal
 
 # cache
 __pycache__/
