@@ -24,10 +24,11 @@ class CalendarView():
         self._init()
 
     def pack(self):
-        self._menu_frame.pack(side=constants.TOP, fill=constants.X, expand=False)
+        self._menu_frame.pack(side=constants.TOP,
+                              fill=constants.X, expand=False)
         self._main_frame.pack(fill=constants.BOTH)
 
-    def destroy(self, logout=False):
+    def destroy(self):
         self._main_frame.destroy()
 
     def _log_out(self):
@@ -38,7 +39,7 @@ class CalendarView():
         selected_date = datetime.datetime(year, month, day)
         self._show_date_view(selected_date)
 
-    # wip, should be buttons instead, not functional
+    # TODO: configuration and help
     def _display_menu(self):
         items = ["configuration", "help", "log out"]
         buttons = {}
@@ -56,9 +57,6 @@ class CalendarView():
                 self._year_menu_frame, text=items[i], font=("Arial", 25), cursor="hand2")
             year_label.grid(row=0, column=i, padx=10)
 
-    # TODO: refactor this (and rest of code) to show configurable amount of months...
-    # or just use a different view for year/month view, since week view probably
-    # requires that anyway
     def _display_months(self, month_range=range(1, 13)):
         row = col = 0
 
@@ -105,7 +103,8 @@ class CalendarView():
                         # the user should be able to click any given day to see, add or delete notes
                         day_label.grid(row=month_calendar.index(
                             week) + 2, column=week.index(day))
-                        day_label.bind("<Button-1>", lambda event, y=self._current_year, m=month, d=day: self._show_date(y, m, d))
+                        day_label.bind("<Button-1>", lambda event, y=self._current_year,
+                                       m=month, d=day: self._show_date(y, m, d))
 
             col += 1
             if col == 3:

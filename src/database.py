@@ -22,7 +22,7 @@ def initialize_for_testing():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         user_id INTEGER PRIMARY KEY,
-        username TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
     );""")
     cursor.execute("""
@@ -44,8 +44,8 @@ def initialize_for_testing():
     testdate_epoch = testdate.timestamp()
 
     user_id = 1
-    note = "some text"
-    note2 = "other text"
+    note = "short note"
+    note2 = "also a note but very important and that is why this note is much longer"
 
     cursor.execute("INSERT INTO notes(user_id, date, content) VALUES(?, ?, ?);",
                    (user_id, testdate_epoch, note,))

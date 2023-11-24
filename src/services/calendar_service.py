@@ -15,23 +15,27 @@ class InvalidCredentialsError(Exception):
 class CalendarService:
     def __init__(self, user_repository=default_user_repository, note_repository=default_note_repository):
         self._user = None
+        self._user_id = None
         self._user_repository = user_repository
         self._note_repository = note_repository
 
-    def get_logged_in_user(self):
-        return self._user
-
     def get_user(self, username):
         return self._user_repository.find_user(username)
-    
+
     def get_user_id(self, username):
         return self._user_repository.find_user_id(username)
 
-    def get_notes(self, date=None):
-        user_id = self.get_user_id(self._user.username)
-        if date:
-            return self._note_repository.get_notes(user_id, date.timestamp())
-        return self._note_repository.get_notes(user_id)
+    def get_notes_by_date(self, date=None):
+        return self._note_repository.get_notes_by_date(self._user_id, date.timestamp())
+
+    def get_notes_all(self):
+        return self._note_repository.get_notes_all(self._user_id)
+
+    def add_note(self, date, content):
+        return self._note_repository.create_note(self._user_id, date.timestamp(), content)
+
+    def delete_note(self, note):
+        return self._note_repository.delete_note(note.note_id)
 
     def create_user(self, username, password):
         if self.get_user(username):
@@ -46,11 +50,13 @@ class CalendarService:
             raise InvalidCredentialsError()
 
         self._user = user
+        self._user_id = self.get_user_id(self._user.username)
 
         return user
 
     def logout(self):
         self._user = None
+        self._user_id = None
 
 
 calendar_service = CalendarService()
