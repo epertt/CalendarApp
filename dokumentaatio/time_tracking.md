@@ -7,3 +7,5 @@
 | 21.11| 2h   | some more work on login and logout (still no persistent accounts, but newly created user accounts last until program is closed) |
 | 21.11| 2h   | working on tests and expanding documentation |
 | 21.11| 2h   | slight refactoring, expanding documentation, making sure the installation(etc.) instructions work as written |
+| 24.11| 4h	  | added date view, started work on adding notes |
+| 25.11| 4h   | continued working on adding and removing notes; both now work (but are deleted on program restart (for testing purposes) for the time being) |
