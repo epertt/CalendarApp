@@ -1,9 +1,10 @@
 from entities.user import User
 from database import get_db_connection
-from sqlite3 import IntegrityError
+
 
 def get_user_by_row(row):
     return User(row["username"], row["password"]) if row else None
+
 
 class UserRepository:
     def __init__(self, connection):
@@ -15,8 +16,34 @@ class UserRepository:
         cursor = self._connection.cursor()
 
         cursor.execute(
-            'select * from users where username = ?',
-            (username,)
+            'SELECT * FROM users WHERE username = ?',
+            (username)
+        )
+
+        row = cursor.fetchone()
+
+        return get_user_by_row(row)
+
+    def find_user_id(self, username):
+
+        cursor = self._connection.cursor()
+
+        cursor.execute(
+            'SELECT * FROM users WHERE username = ?',
+            (username)
+        )
+
+        row = cursor.fetchone()
+
+        return row["user_id"]
+
+    def find_user_by_id(self, user_id):
+
+        cursor = self._connection.cursor()
+
+        cursor.execute(
+            'SELECT * FROM users WHERE user_id = ?',
+            (user_id)
         )
 
         row = cursor.fetchone()
@@ -33,5 +60,6 @@ class UserRepository:
         )
 
         return user
+
 
 user_repository = UserRepository(get_db_connection())

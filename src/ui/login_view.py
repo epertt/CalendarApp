@@ -3,11 +3,13 @@ from services.calendar_service import calendar_service, InvalidCredentialsError,
 
 class LoginView:
 
-    def __init__(self, root, calendar_view):
+    def __init__(self, root, calendar_view, menu_buttons=None):
         self._root = root
         self._root.title("Login")
 
         self._show_calendar_view = calendar_view
+
+        self._menu_buttons = menu_buttons
 
         self._login_frame = None
 
@@ -23,7 +25,7 @@ class LoginView:
     def pack(self):
         self._login_frame.pack(fill=constants.BOTH, expand=True)
 
-    def destroy(self):
+    def destroy(self, _):
         self._login_frame.destroy()
 
     def _init_help_message(self, text1="enter username and password to log in", text2="account will be created if it doesn't exist"):
@@ -48,12 +50,13 @@ class LoginView:
         self._password_field.grid(row=3, column=1, pady=5, columnspan=2, sticky=constants.W)
 
     def _init_buttons(self):
-        self.login_button = ttk.Button(self._login_frame, text="login", command=lambda: self._handle_login())
-        self.login_button.grid(row=4, column=0, columnspan=3, pady=5, sticky=(constants.W, constants.E))
-        #self.login_button.grid_columnconfigure(1, weight=1)
+        login_button = ttk.Button(self._login_frame, text="login", command=lambda: self._handle_login())
+        login_button.grid(row=4, column=0, columnspan=3, pady=5, sticky=(constants.W, constants.E))
 
     def _init(self):
         calendar_service.logout()
+        if self._menu_buttons:
+            self._menu_buttons.destroy()
 
         self._login_frame = ttk.Frame(self._root)
         

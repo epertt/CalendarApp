@@ -1,15 +1,19 @@
 import calendar
 import datetime
-from tkinter import Tk, ttk, constants
+from tkinter import ttk, constants
+
+from services.calendar_service import calendar_service
+
 
 class CalendarView():
-    def __init__(self, root, login_view):
+    def __init__(self, root, date_view, login_view):
         self._root = root
         self._root.title("Calendar")
-        self._root.geometry=("700x650")
+        self._root.geometry = ("700x650")
 
         self._current_year = datetime.datetime.now().year
 
+        self._show_date_view = date_view
         self._show_login_view = login_view
 
         self._menu_frame = None
@@ -20,31 +24,37 @@ class CalendarView():
         self._init()
 
     def pack(self):
-        self._menu_frame.pack(fill=constants.BOTH)
+        self._menu_frame.pack(side=constants.TOP, fill=constants.X, expand=False)
         self._main_frame.pack(fill=constants.BOTH)
 
-    def destroy(self):
-        self._menu_frame.destroy()
+    def destroy(self, logout=False):
         self._main_frame.destroy()
 
     def _log_out(self):
-        self._show_login_view()
+        calendar_service.logout()
+        self._show_login_view(self._menu_frame)
+
+    def _show_date(self, year, month, day):
+        selected_date = datetime.datetime(year, month, day)
+        self._show_date_view(selected_date)
 
     # wip, should be buttons instead, not functional
     def _display_menu(self):
-        items = ["configuration", "add & remove notes", "help", "log out"]
+        items = ["configuration", "help", "log out"]
         buttons = {}
         for i, item in enumerate(items):
-            buttons[item] = ttk.Button(master=self._menu_frame, text=item, padding=5, cursor="hand2")
+            buttons[item] = ttk.Button(
+                self._menu_frame, text=item, padding=5, cursor="hand2")
             buttons[item].grid(row=0, column=i, padx=5, pady=10)
         buttons["log out"].bind("<Button-1>", lambda event: self._log_out())
 
     # wip, should be buttons instead, not functional
     def _display_year_menu(self, year):
         items = ["<", year, ">"]
-        for i, item in enumerate(items):
-            self.year_label = ttk.Label(self._year_menu_frame, text=items[i], font=("Arial", 25), cursor="hand2")
-            self.year_label.grid(row=0, column=i, padx=10)
+        for i, _ in enumerate(items):
+            year_label = ttk.Label(
+                self._year_menu_frame, text=items[i], font=("Arial", 25), cursor="hand2")
+            year_label.grid(row=0, column=i, padx=10)
 
     # TODO: refactor this (and rest of code) to show configurable amount of months...
     # or just use a different view for year/month view, since week view probably
@@ -52,16 +62,17 @@ class CalendarView():
     def _display_months(self, month_range=range(1, 13)):
         row = col = 0
 
-        # fixed size for each month frame; though not ideal, still looks better 
+        # fixed size for each month frame; though not ideal, still looks better
         # than having mismatched heights for months
         month_frame_width = 200
         month_frame_height = 200
-        
+
         for month in month_range:
             month_calendar = calendar.monthcalendar(self._current_year, month)
 
             # a separate frame for each month is needed to use grid
-            month_frame = ttk.Frame(self._calendar_frame, borderwidth=1, relief="solid", width=month_frame_width, height=month_frame_height, padding=(3, 15, 0, 0))
+            month_frame = ttk.Frame(self._calendar_frame, borderwidth=1, relief="solid",
+                                    width=month_frame_width, height=month_frame_height, padding=(3, 15, 0, 0))
             month_frame.grid(row=row, column=col, padx=10, pady=10)
             month_frame.grid_propagate(False)
 
@@ -75,7 +86,8 @@ class CalendarView():
             # don't take too much space)
             for day_name in calendar.day_name:
                 day_label = ttk.Label(month_frame, text=day_name[:3], width=-3)
-                day_label.grid(row=1, column=list(calendar.day_name).index(day_name), pady=(0, 5))
+                day_label.grid(row=1, column=list(
+                    calendar.day_name).index(day_name), pady=(0, 5))
 
             # under the abbreviated weekdays there should be a grid of days numbered from
             # 1 to 28-31, depending on how many days the month has; the calendar module
@@ -84,14 +96,16 @@ class CalendarView():
             for week in month_calendar:
                 for day in week:
                     if day > 0:
-                        if datetime.date(self._current_year, month, day)== datetime.date.today():
-                            day_label = ttk.Label(month_frame, text=str(day), cursor="hand2", width=-2, background='yellow')
+                        if datetime.date(self._current_year, month, day) == datetime.date.today():
+                            day_label = ttk.Label(month_frame, text=str(
+                                day), cursor="hand2", width=-2, background='yellow')
                         else:
-                            day_label = ttk.Label(month_frame, text=str(day), cursor="hand2", width=-2)
+                            day_label = ttk.Label(month_frame, text=str(
+                                day), cursor="hand2", width=-2)
                         # the user should be able to click any given day to see, add or delete notes
-                        # TODO: actually implement that, currently just prints the date for testing
-                        day_label.grid(row=month_calendar.index(week) + 2, column=week.index(day))
-                        day_label.bind("<Button-1>", lambda event, d=day, m=month, y=self._current_year: self.print_date_test(d, m, y))
+                        day_label.grid(row=month_calendar.index(
+                            week) + 2, column=week.index(day))
+                        day_label.bind("<Button-1>", lambda event, y=self._current_year, m=month, d=day: self._show_date(y, m, d))
 
             col += 1
             if col == 3:
@@ -106,7 +120,7 @@ class CalendarView():
         self._main_frame = ttk.Frame(self._root)
 
         self.pack()
-        
+
         # frame that contains buttons like so: < {year} >
         # for going forward or back in time
         self._year_menu_frame = ttk.Frame(self._main_frame)
@@ -119,6 +133,3 @@ class CalendarView():
         self._display_menu()
         self._display_year_menu(self._current_year)
         self._display_months()
-
-    def print_date_test(self, day, month, year):
-        print(f"day: {day} month: {month} year: {year}")
