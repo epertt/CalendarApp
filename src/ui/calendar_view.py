@@ -9,7 +9,7 @@ class CalendarView():
     def __init__(self, root, date_view, login_view):
         self._root = root
         self._root.title("Calendar")
-        self._root.geometry = ("700x650")
+        self._root.geometry = "700x650"
 
         self._current_year = datetime.datetime.now().year
 
@@ -70,7 +70,8 @@ class CalendarView():
 
             # a separate frame for each month is needed to use grid
             month_frame = ttk.Frame(self._calendar_frame, borderwidth=1, relief="solid",
-                                    width=month_frame_width, height=month_frame_height, padding=(3, 15, 0, 0))
+                                    width=month_frame_width, height=month_frame_height,
+                                    padding=(3, 15, 0, 0))
             month_frame.grid(row=row, column=col, padx=10, pady=10)
             month_frame.grid_propagate(False)
 
@@ -90,7 +91,8 @@ class CalendarView():
             # under the abbreviated weekdays there should be a grid of days numbered from
             # 1 to 28-31, depending on how many days the month has; the calendar module
             # gives days outside the given month as "0", which can be ignored
-            # label instead of button seems necessary here for style reasons and for properly fitting on the grid
+            # label instead of button seems necessary here for style reasons and for
+            # properly fitting on the grid
             for week in month_calendar:
                 for day in week:
                     if day > 0:

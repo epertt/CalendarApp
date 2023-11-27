@@ -13,7 +13,10 @@ class InvalidCredentialsError(Exception):
 
 
 class CalendarService:
-    def __init__(self, user_repository=default_user_repository, note_repository=default_note_repository):
+    def __init__(self,
+                 user_repository=default_user_repository,
+                 note_repository=default_note_repository
+                 ):
         self._user = None
         self._user_id = None
         self._user_repository = user_repository

@@ -34,12 +34,12 @@ class TestCalendarService(unittest.TestCase):
         )
         self.assertEqual(self.new_user, created_user)
 
-    def test_create_user_raises_UserExistsError_if_user_exists(self):
+    def test_create_user_raises_userexistserror_if_user_exists(self):
         self.calendar_service.create_user(
             self.test_user.username, self.test_user.password
         )
         with self.assertRaises(UserExistsError) as context:
-            created_user = self.calendar_service.create_user(
+            self.calendar_service.create_user(
                 self.test_user.username, self.test_user.password
             )
         self.assertTrue("username already exists" in str(context.exception))

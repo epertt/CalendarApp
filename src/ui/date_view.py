@@ -6,7 +6,7 @@ class DateView():
     def __init__(self, root, date, login_view, calendar_view):
         self._root = root
         self._root.title(date)
-        self._root.geometry = ("300x400")
+        self._root.geometry = "300x400"
 
         self._date = date
         self._notes = []
@@ -38,7 +38,8 @@ class DateView():
     def _display_date(self):
         year, month, day = self._date.year, self._date.month, self._date.day
         date_label = ttk.Label(self._date_frame, font=(
-            "Arial", 15), text=f"{year}/{month}/{day}", borderwidth=1, relief="solid", anchor=constants.CENTER)
+            "Arial", 15), text=f"{year}/{month}/{day}", 
+            borderwidth=1, relief="solid", anchor=constants.CENTER)
         date_label.grid(row=0, column=0, columnspan=3,
                         padx=5, pady=5, sticky=constants.NSEW)
 
@@ -64,7 +65,8 @@ class DateView():
             self._note_label_content[i].grid(row=i+1, column=1, padx=5,
                                              pady=5, sticky=constants.NSEW)
             self._remove_button[i] = ttk.Button(
-                self._date_frame, text="x", command=lambda i=i: self._handle_delete_note_button(self._notes[i]))
+                self._date_frame, text="x", command=lambda
+                i=i: self._handle_delete_note_button(self._notes[i]))
             self._remove_button[i].grid(
                 row=i+1, column=2, padx=5, pady=5, sticky=constants.NSEW)
         self._display_note_buttons()
@@ -79,7 +81,8 @@ class DateView():
         if self._add_note_button:
             self._add_note_button.destroy()
         self._add_note_button = ttk.Button(
-            self._date_frame, padding=5, text="add note", cursor="hand2", command=lambda: self._handle_add_note_button())
+            self._date_frame, padding=5, text="add note", cursor="hand2", command=lambda:
+            self._handle_add_note_button())
         self._add_note_button.grid(row=len(self._notes)+1, column=2,
                                    padx=5, pady=5, sticky=constants.NSEW)
 

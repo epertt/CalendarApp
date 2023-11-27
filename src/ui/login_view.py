@@ -29,7 +29,10 @@ class LoginView:
     def destroy(self):
         self._login_frame.destroy()
 
-    def _init_help_message(self, text1="enter username and password to log in", text2="account will be created if it doesn't exist"):
+    def _init_help_message(self,
+                           text1="enter username and password to log in",
+                           text2="account will be created if it doesn't exist"
+                           ):
         if self.account_created_label1 or self.account_created_label2:
             self.account_created_label1.destroy()
             self.account_created_label2.destroy()
