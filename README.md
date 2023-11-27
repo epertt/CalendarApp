@@ -15,12 +15,15 @@ Requirements:
 Clone the git repository and run the following commands on your terminal:
 ```
 poetry install
+poetry run invoke setup
 poetry run invoke start
 ```
-If you get an error while running any of the commands, your poetry installation is probably out of date. If on linux, update to a newer version using your distribution's package manager, or run the following to install poetry:
+If you get an error while running ```poetry install```, your poetry installation is probably out of date. If on linux, update to a newer version using your distribution's package manager, or run the following to install poetry:
 ```
 curl -sSL https://install.python-poetry.org | POETRY_HOME=$HOME/.local python3 -
 ```
+
+If you get an error starting the program, you probably forgot to run ```poetry run invoke setup```
 
 ## Testing:
 Running tests:
