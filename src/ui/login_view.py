@@ -92,7 +92,7 @@ class LoginView:
         except InvalidCredentialsError:
             self._init_help_message("", "the password is incorrect")
             try:
-                calendar_service.create_user(username, password)
+                calendar_service.add_user(username, password)
                 self._init_help_message(
                     f"created account with user {username}", "click login again to log in")
             except UserExistsError:

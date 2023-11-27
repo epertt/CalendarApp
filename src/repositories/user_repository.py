@@ -26,7 +26,7 @@ class UserRepository:
 
     def find_user_id(self, user):
         user = self.find_user(user.username)
-        return user["user_id"]
+        return user.user_id
 
     def find_user_by_id(self, user_id):
 
@@ -50,6 +50,8 @@ class UserRepository:
             (user.username, user.password)
         )
 
+        self._connection.commit()
+
         return self.find_user(user.username)
 
     def delete_user(self, user):
@@ -58,8 +60,10 @@ class UserRepository:
 
         cursor.execute(
             'DELETE FROM users WHERE user_id = ?',
-            (user.user_id)
+            (user.user_id,)
         )
+
+        self._connection.commit()
 
         return self.find_user(user.username)
 

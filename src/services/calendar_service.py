@@ -35,7 +35,6 @@ class CalendarService:
 
     def get_user_id(self, user):
         user_id = self._user_repository.find_user_id(user)
-        print(user_id)
         return user_id
 
     def get_user_by_id(self, user_id):

@@ -5,8 +5,8 @@ from database import get_db_connection
 def get_notes_by_rows(row):
     notes = []
     for note in row:
-        new_note = Note(note["note_id"], note["user_id"],
-                        note["date"], note["content"])
+        new_note = Note(note["user_id"],
+                        note["date"], note["content"], note["note_id"])
         notes.append(new_note)
     return notes
 
@@ -35,23 +35,25 @@ class NoteRepository:
 
         cursor.execute(
             'SELECT * FROM notes WHERE user_id=?',
-            (str(user_id))
+            (user_id,)
         )
 
         row = cursor.fetchall()
 
         return get_notes_by_rows(row)
 
-    def create_note(self, user_id, date, note):
+    def create_note(self, user_id, date, content):
 
         cursor = self._connection.cursor()
 
         cursor.execute(
             'INSERT INTO notes(user_id, date, content) VALUES(?, ?, ?)',
-            (user_id, date, note)
+            (user_id, date, content)
         )
 
-        return Note(cursor.lastrowid, user_id, date, note)
+        self._connection.commit()
+
+        return Note(user_id, date, content, cursor.lastrowid)
 
     def delete_note(self, note_id):
 
@@ -59,8 +61,10 @@ class NoteRepository:
 
         cursor.execute(
             'DELETE FROM notes WHERE note_id = ?',
-            (str(note_id))
+            (note_id,)
         )
+
+        self._connection.commit()
 
         return note_id
 
