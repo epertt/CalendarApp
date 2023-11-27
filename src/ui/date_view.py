@@ -92,7 +92,7 @@ class DateView():
         self._display_notes()
 
     def _handle_delete_note_button(self, note):
-        calendar_service.delete_note(note)
+        calendar_service.remove_note(note)
         self._display_notes()
 
     def _init(self):

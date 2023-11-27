@@ -5,11 +5,15 @@ from repositories.note_repository import note_repository as default_note_reposit
 
 
 class UserExistsError(Exception):
-    pass
+    "User already exists"
+
+
+class UserDoesNotExistError(Exception):
+    "User does not exist"
 
 
 class InvalidCredentialsError(Exception):
-    pass
+    "Username or password are incorrect"
 
 
 class CalendarService:
@@ -22,11 +26,24 @@ class CalendarService:
         self._user_repository = user_repository
         self._note_repository = note_repository
 
-    def get_user(self, username):
-        return self._user_repository.find_user(username)
+    def get_user_by_username(self, username):
+        user = self._user_repository.find_user(username)
+        if user is None:
+            raise UserDoesNotExistError()
+        return user
 
-    def get_user_id(self, username):
-        return self._user_repository.find_user_id(username)
+    def get_user_id(self, user):
+        user_id = self._user_repository.find_user_id(user)
+        print(user_id)
+        if user_id is None:
+            raise UserDoesNotExistError()
+        return user_id
+
+    def get_user_by_id(self, user_id):
+        user = self._user_repository.find_user_by_id(user_id)
+        if user is None:
+            raise UserDoesNotExistError()
+        return user
 
     def get_notes_by_date(self, date=None):
         return self._note_repository.get_notes_by_date(self._user_id, date.timestamp())
@@ -37,14 +54,21 @@ class CalendarService:
     def add_note(self, date, content):
         return self._note_repository.create_note(self._user_id, date.timestamp(), content)
 
-    def delete_note(self, note):
+    def remove_note(self, note):
         return self._note_repository.delete_note(note.note_id)
 
-    def create_user(self, username, password):
-        if self.get_user(username):
-            raise UserExistsError("username already exists")
-        user = User(username, password)
-        return self._user_repository.create_user(user)
+    def add_user(self, username, password):
+        try:
+            if self.get_user_by_username(username):
+                raise UserExistsError()
+        except UserDoesNotExistError:
+            user = User(username, password)
+            return self._user_repository.create_user(user)
+
+    def remove_user(self, user):
+        if not self.get_user_by_username(user.username):
+            raise UserDoesNotExistError()
+        return self._user_repository.delete_user(user)
 
     def login(self, username, password):
         user = self._user_repository.find_user(username)
