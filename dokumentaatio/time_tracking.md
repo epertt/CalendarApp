@@ -10,3 +10,4 @@
 | 24.11| 4h	  | added date view, started work on adding notes |
 | 25.11| 4h   | continued working on adding and removing notes; both now work (but are deleted on program restart (for testing purposes) for the time being) |
 | 27.11| 5h   | adding more tests and refactoring parts of the code |
+| 27.11| 2h   | working on documentation (mostly package diagrams) and refactoring some parts |
