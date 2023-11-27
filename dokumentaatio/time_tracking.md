@@ -9,3 +9,4 @@
 | 21.11| 2h   | slight refactoring, expanding documentation, making sure the installation(etc.) instructions work as written |
 | 24.11| 4h	  | added date view, started work on adding notes |
 | 25.11| 4h   | continued working on adding and removing notes; both now work (but are deleted on program restart (for testing purposes) for the time being) |
+| 27.11| 5h   | adding more tests and refactoring parts of the code |

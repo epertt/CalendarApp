@@ -10,3 +10,4 @@
 - Added date view (after opening the program, click on any day to open a date view where you can add and remove notes)
 - Added adding and removing notes
 - Added various tests related to account creation
+- Accounts and notes are no longer cleared when program is restarted
