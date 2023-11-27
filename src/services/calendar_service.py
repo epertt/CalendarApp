@@ -26,23 +26,20 @@ class CalendarService:
         self._user_repository = user_repository
         self._note_repository = note_repository
 
+    def get_current_user(self):
+        return self._user
+
     def get_user_by_username(self, username):
         user = self._user_repository.find_user(username)
-        if user is None:
-            raise UserDoesNotExistError()
         return user
 
     def get_user_id(self, user):
         user_id = self._user_repository.find_user_id(user)
         print(user_id)
-        if user_id is None:
-            raise UserDoesNotExistError()
         return user_id
 
     def get_user_by_id(self, user_id):
         user = self._user_repository.find_user_by_id(user_id)
-        if user is None:
-            raise UserDoesNotExistError()
         return user
 
     def get_notes_by_date(self, date=None):
@@ -58,12 +55,10 @@ class CalendarService:
         return self._note_repository.delete_note(note.note_id)
 
     def add_user(self, username, password):
-        try:
-            if self.get_user_by_username(username):
-                raise UserExistsError()
-        except UserDoesNotExistError:
-            user = User(username, password)
-            return self._user_repository.create_user(user)
+        if self.get_user_by_username(username):
+            raise UserExistsError()
+        user = User(username, password)
+        return self._user_repository.create_user(user)
 
     def remove_user(self, user):
         if not self.get_user_by_username(user.username):
@@ -77,7 +72,7 @@ class CalendarService:
             raise InvalidCredentialsError()
 
         self._user = user
-        self._user_id = self.get_user_id(self._user.username)
+        self._user_id = self.get_user_id(self._user)
 
         return user
 
