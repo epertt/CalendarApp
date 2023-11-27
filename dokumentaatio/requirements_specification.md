@@ -12,9 +12,10 @@ WIP
   - [ ] delete own user
   - [ ] (*alongside all notes added the user*)
 - Calendar view that shows a 
-  - [ ] week
-  - [ ] month
-  - [x] year
+  - [ ] week/
+  - [ ] month/
+  - [x] year view and
+  - [ ] highlights days that have notes
 - Ability to 
   - [x] add
   - [x] remove
