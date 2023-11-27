@@ -1,5 +1,5 @@
 # CalendarApp
-Simple multi-user calendar application that shows a single year, month or week, with the current day highlighted. Other (not yet implemented) features will include adding notes to days, as well as editing the notes, which will be shown on the calendar view.
+Simple multi-user calendar application that shows a single year, month or week, with the current day highlighted. Other features include adding notes to days, as well as editing the notes (not yet implemented), which will be shown on the calendar view.
 
 ## Documentation
 - [Requirements specification](./dokumentaatio/requirements_specification.md)
