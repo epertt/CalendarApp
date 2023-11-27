@@ -1,4 +1,5 @@
 from entities.user import User
+from entities.note import Note
 
 from repositories.user_repository import user_repository as default_user_repository
 from repositories.note_repository import note_repository as default_note_repository
@@ -48,7 +49,8 @@ class CalendarService:
         return self._note_repository.get_notes_all(self._user_id)
 
     def add_note(self, date, content):
-        return self._note_repository.create_note(self._user_id, date.timestamp(), content)
+        new_note = Note(self._user_id, date.timestamp(), content)
+        return self._note_repository.create_note(new_note)
 
     def remove_note(self, note):
         return self._note_repository.delete_note(note.note_id)
