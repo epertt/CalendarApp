@@ -5,13 +5,24 @@ Basic version will only have normal users that can create and delete their own a
 ### User interface draft
 WIP
 ### Planned features
-- Multiple users with separate notes
-- Users can login, logout, delete own user (*alongside all notes added the user*)
-- Calendar view that shows a week/month/year, *as selected by user*
-- Ability to add, remove, edit and search notes
-- Reminders of upcoming notes from up to x days (*customizable*)
+- [x] Multiple users with separate notes
+- Users can
+  - [x] login,
+  - [x] logout,
+  - [ ] delete own user
+  - [ ] (*alongside all notes added the user*)
+- Calendar view that shows a 
+  - [ ] week
+  - [ ] month
+  - [x] year
+- Ability to 
+  - [x] add
+  - [x] remove
+  - [ ] edit and
+  - [ ] search notes
+- [ ] Reminders of upcoming notes from up to x days (*customizable*)
 - 
 ##### Additional (possible) features
-- Admin user that can delete, view and edit other users' notes and delete accounts
-- Ability to insert images or other non-text data into notes
+- [ ] Admin user that can delete, view and edit other users' notes and delete accounts
+- [ ] Ability to insert images or other non-text data into notes
 - 
