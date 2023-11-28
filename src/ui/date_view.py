@@ -97,8 +97,8 @@ class DateView():
 
     def _init(self):
 
-        self._menu_frame = ttk.Frame(self._root)
-        self._main_frame = ttk.Frame(self._root)
+        self._menu_frame = ttk.Frame(self._root, padding=10)
+        self._main_frame = ttk.Frame(self._root, padding=10)
 
         self._date_frame = ttk.Frame(
             self._main_frame, borderwidth=1, relief="solid")

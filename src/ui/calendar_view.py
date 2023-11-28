@@ -114,10 +114,10 @@ class CalendarView():
 
     def _init(self):
         # frame for menus (configure, add/remove notes, help, logout)
-        self._menu_frame = ttk.Frame(self._root)
+        self._menu_frame = ttk.Frame(self._root, padding=10)
 
         # main container frame
-        self._main_frame = ttk.Frame(self._root)
+        self._main_frame = ttk.Frame(self._root, padding=10)
 
         self.pack()
 

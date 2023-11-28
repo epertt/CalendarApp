@@ -33,6 +33,7 @@ class UI:
         self._reset_view()
         self._current_view = DateView(
             self._root, date, self._show_view_calendar, self._show_view_login)
+        self._current_view.pack()
 
     def _show_view_configuration(self):
         pass

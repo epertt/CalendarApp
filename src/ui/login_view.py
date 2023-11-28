@@ -73,7 +73,7 @@ class LoginView:
         if self._menu_buttons:
             self._menu_buttons.destroy()
 
-        self._login_frame = ttk.Frame(self._root)
+        self._login_frame = ttk.Frame(self._root, padding=10)
 
         self._init_help_message()
         self._init_labels()
