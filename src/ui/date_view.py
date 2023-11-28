@@ -6,7 +6,6 @@ class DateView():
     def __init__(self, root, date, login_view, calendar_view):
         self._root = root
         self._root.title(date)
-        self._root.geometry = "300x400"
 
         self._date = date
         self._notes = []
@@ -27,6 +26,7 @@ class DateView():
 
     def pack(self):
         self._main_frame.pack(fill=constants.BOTH, expand=True)
+        self._date_frame.pack()
 
     def destroy(self):
         self._main_frame.destroy()
@@ -105,8 +105,5 @@ class DateView():
 
         self._display_date()
         self._display_notes()
-
-        self._date_frame.place(in_=self._main_frame,
-                               anchor="c", relx=.5, rely=.5)
 
         self.pack()

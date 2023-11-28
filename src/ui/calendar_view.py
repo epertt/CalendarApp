@@ -9,7 +9,6 @@ class CalendarView():
     def __init__(self, root, date_view, login_view):
         self._root = root
         self._root.title("Calendar")
-        self._root.geometry = "700x650"
 
         self._current_year = datetime.datetime.now().year
 

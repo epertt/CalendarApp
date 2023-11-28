@@ -4,6 +4,7 @@ from ui.ui import UI
 
 def main():
     root_window = Tk()
+    root_window.resizable(False, False)
     root_window.title("CalendarApp")
 
     ui_view = UI(root_window)
