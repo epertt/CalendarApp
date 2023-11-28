@@ -42,7 +42,7 @@ class CalendarService:
         user = self._user_repository.find_user_by_id(user_id)
         return user
 
-    def get_notes_by_date(self, date=None):
+    def get_notes_by_date(self, date):
         return self._note_repository.get_notes_by_date(self._user_id, date.timestamp())
 
     def get_notes_all(self):

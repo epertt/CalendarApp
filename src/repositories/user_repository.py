@@ -17,7 +17,7 @@ class UserRepository:
 
         cursor.execute(
             'SELECT * FROM users WHERE username = ?',
-            (username)
+            (username,)
         )
 
         row = cursor.fetchone()
@@ -34,7 +34,7 @@ class UserRepository:
 
         cursor.execute(
             'SELECT * FROM users WHERE user_id = ?',
-            (user_id)
+            (user_id,)
         )
 
         row = cursor.fetchone()
@@ -47,7 +47,7 @@ class UserRepository:
 
         cursor.execute(
             'insert into users(username, password) values(?, ?)',
-            (user.username, user.password)
+            (user.username, user.password,)
         )
 
         self._connection.commit()
