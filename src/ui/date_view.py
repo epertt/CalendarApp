@@ -3,7 +3,7 @@ from services.calendar_service import calendar_service
 
 
 class DateView():
-    def __init__(self, root, date, login_view, calendar_view):
+    def __init__(self, root, date, login_view, calendar_view, date_view):
         self._root = root
         self._root.title(date)
 
@@ -12,6 +12,7 @@ class DateView():
 
         self._show_calendar_view = calendar_view
         self._show_login_view = login_view
+        self._show_date_view = date_view
 
         self._add_note_entry = None
         self._add_note_button = None
@@ -19,7 +20,7 @@ class DateView():
         self._note_label_num = None
         self._note_label_content = None
 
-        self._menu_frame = None
+        self._date_menu_frame = None
         self._date_frame = None
 
         self._init()
@@ -85,6 +86,14 @@ class DateView():
             self._handle_add_note_button())
         self._add_note_button.grid(row=len(self._notes)+1, column=2,
                                    padx=5, pady=5, sticky=constants.NSEW)
+        
+    def _display_date_menu_buttons(self):
+        date_button_previous = ttk.Button(self._date_menu_frame, text="<", command=lambda: self._handle_date_button_previous())
+        date_button_current = ttk.Button(self._date_menu_frame, text="back", command=lambda: self._handle_calendar_view_button())
+        date_button_next = ttk.Button(self._date_menu_frame, text=">", command=lambda: self._handle_date_button_next())
+        date_button_previous.grid(row=0, column=0, padx=5, pady=5)
+        date_button_current.grid(row=0, column=1, padx=5, pady=5)
+        date_button_next.grid(row=0, column=2, padx=5, pady=5)
 
     def _handle_add_note_button(self):
         note_content = self._add_note_entry.get()
@@ -95,10 +104,25 @@ class DateView():
         calendar_service.remove_note(note)
         self._display_notes()
 
+    def _handle_date_button_previous(self):
+        yesterday = calendar_service.get_day_previous(self._date)
+        self._show_date_view(yesterday)
+
+    def _handle_date_button_next(self):
+        tomorrow = calendar_service.get_day_next(self._date)
+        self._show_date_view(tomorrow)
+
+    def _handle_calendar_view_button(self):
+        self._show_calendar_view(self._date)
+
     def _init(self):
 
         self._menu_frame = ttk.Frame(self._root, padding=10)
         self._main_frame = ttk.Frame(self._root, padding=10)
+
+        self._date_menu_frame = ttk.Frame(self._main_frame)
+        self._date_menu_frame.pack()
+        self._display_date_menu_buttons()
 
         self._date_frame = ttk.Frame(
             self._main_frame, borderwidth=1, relief="solid")

@@ -6,14 +6,16 @@ from services.calendar_service import calendar_service
 
 
 class CalendarView():
-    def __init__(self, root, date_view, login_view):
+    def __init__(self, root, date_view, login_view, calendar_view, date=datetime.datetime.now()):
         self._root = root
         self._root.title("Calendar")
 
-        self._current_year = datetime.datetime.now().year
+        self._current_year = date.year
+        self._date = date
 
         self._show_date_view = date_view
         self._show_login_view = login_view
+        self._show_calendar_view = calendar_view
 
         self._menu_frame = None
         self._main_frame = None
@@ -28,6 +30,7 @@ class CalendarView():
         self._main_frame.pack(fill=constants.BOTH)
 
     def destroy(self):
+        self._menu_frame.destroy()
         self._main_frame.destroy()
 
     def _log_out(self):
@@ -50,11 +53,19 @@ class CalendarView():
 
     # wip, should be buttons instead, not functional
     def _display_year_menu(self, year):
-        items = ["<", year, ">"]
-        for i, _ in enumerate(items):
-            year_label = ttk.Label(
-                self._year_menu_frame, text=items[i], font=("Arial", 25), cursor="hand2")
-            year_label.grid(row=0, column=i, padx=10)
+#        items = ["<", year, ">"]
+#        buttons = {}
+#        for i, item in enumerate(items):
+#            buttons[item] = ttk.Button(
+#                self._year_menu_frame, text=items[i], cursor="hand2")
+#            buttons[item].grid(row=0, column=i, padx=10)
+
+        year_button_previous = ttk.Button(self._year_menu_frame, text="<", command=lambda: self._handle_year_button_previous())
+        year_button_current = ttk.Button(self._year_menu_frame, text=year)
+        year_button_next = ttk.Button(self._year_menu_frame, text=">", command=lambda: self._handle_year_button_next())
+        year_button_previous.grid(row=0, column=0, padx=5, pady=5)
+        year_button_current.grid(row=0, column=1, padx=5, pady=5)
+        year_button_next.grid(row=0, column=2, padx=5, pady=5)
 
     def _display_months(self, month_range=range(1, 13)):
         row = col = 0
@@ -111,6 +122,14 @@ class CalendarView():
             if col == 3:
                 col = 0
                 row += 1
+
+    def _handle_year_button_previous(self):
+        previous_year = calendar_service.get_year_previous(self._date)
+        self._show_calendar_view(previous_year)
+        
+    def _handle_year_button_next(self):
+        next_year = calendar_service.get_year_next(self._date)
+        self._show_calendar_view(next_year)
 
     def _init(self):
         # frame for menus (configure, add/remove notes, help, logout)

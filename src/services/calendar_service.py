@@ -1,3 +1,5 @@
+import datetime
+
 from entities.user import User
 from entities.note import Note
 
@@ -60,6 +62,21 @@ class CalendarService:
             raise UserExistsError()
         user = User(username, password)
         return self._user_repository.create_user(user)
+    
+    def get_day_previous(self, date):
+        return date + datetime.timedelta(days=-1)
+
+    def get_day_next(self, date):
+        return date + datetime.timedelta(days=1)
+    
+    def get_year_previous(self, date):
+        return date + datetime.timedelta(days=-365)
+
+    def get_year_next(self, date):
+        return date + datetime.timedelta(days=365)
+    
+    def get_current_date(self):
+        return datetime.datetime.now()
 
     def remove_user(self, user):
         if not self.get_user_by_username(user.username):

@@ -88,7 +88,7 @@ class LoginView:
 
         try:
             calendar_service.login(username, password)
-            self._show_calendar_view()
+            self._show_calendar_view(calendar_service.get_current_date())
         except InvalidCredentialsError:
             self._init_help_message("", "the password is incorrect")
             try:
