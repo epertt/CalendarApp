@@ -1,11 +1,10 @@
 import unittest
 from entities.user import User
 
-from services.calendar_service import (
-    CalendarService,
+from services.user_service import (
+    UserService,
     UserExistsError,
     UserDoesNotExistError,
-    InvalidCredentialsError,
 )
 
 
@@ -38,44 +37,34 @@ class FakeUserRepository:
         return self.find_user(user.username)
 
 
-class TestCalendarService(unittest.TestCase):
+class TestUserService(unittest.TestCase):
     def setUp(self):
-        self.calendar_service = CalendarService(FakeUserRepository())
+        self.fake_user_repo = FakeUserRepository()
+        self.user_service = UserService(self.fake_user_repo)
 
         self.test_users = []
         self.test_users.append(User("user", "pass", len(self.test_users)))
         self.test_users.append(User("foo", "bar", len(self.test_users)))
 
         for test_user in self.test_users:
-            self.calendar_service.add_user(
+            self.user_service.add_user(
                 test_user.username, test_user.password)
-
-    def test_login_logs_in_with_correct_credentials(self):
-        self.calendar_service.login(
-            self.test_users[0].username, self.test_users[0].password)
-        self.assertEqual(
-            self.calendar_service.get_current_user(), self.test_users[0])
-
-    def test_login_raises_invalidcredentialserror_with_incorrect_password(self):
-        with self.assertRaises(InvalidCredentialsError):
-            self.calendar_service.login(
-                self.test_users[0].username, "wrongpassword")
 
     def test_get_user_by_username(self):
         self.assertEqual(
-            self.calendar_service.get_user_by_username(
+            self.user_service.get_user_by_username(
                 self.test_users[0].username),
             self.test_users[0]
         )
 
     def test_get_user_by_username_returns_none_if_user_not_found(self):
         self.assertEqual(
-            self.calendar_service.get_user_by_username("userthatdoesnotexist"),
+            self.user_service.get_user_by_username("userthatdoesnotexist"),
             None
         )
 
     def test_add_user(self):
-        created_user = self.calendar_service.add_user(
+        created_user = self.user_service.add_user(
             "test", "hunter2"
         )
 
@@ -90,35 +79,35 @@ class TestCalendarService(unittest.TestCase):
 
     def test_add_user_raises_userexistserror_if_user_exists(self):
         with self.assertRaises(UserExistsError):
-            self.calendar_service.add_user(
+            self.user_service.add_user(
                 self.test_users[1].username, self.test_users[1].password)
 
     def test_delete_user(self):
         self.assertEqual(
-            self.calendar_service.remove_user(self.test_users[0]),
+            self.user_service.remove_user(self.test_users[0]),
             None
         )
 
     def test_delete_user_raises_userdoesnotexistserror_if_user_does_not_exist(self):
         test_user = User("userthatdoesnotexist", "password")
         with self.assertRaises(UserDoesNotExistError):
-            self.calendar_service.remove_user(test_user)
+            self.user_service.remove_user(test_user)
 
     def test_get_user_id(self):
         self.assertEqual(
-            self.calendar_service.get_user_id(self.test_users[1]),
+            self.user_service.get_user_id(self.test_users[1]),
             self.test_users[1].user_id
         )
 
     def test_get_user_id_returns_none_if_user_not_found(self):
         test_user = User("userthatdoesnotexist", "password")
         self.assertEqual(
-            self.calendar_service.get_user_id(test_user),
+            self.user_service.get_user_id(test_user),
             None
         )
 
     def test_get_user_by_id(self):
         self.assertEqual(
-            self.calendar_service.get_user_by_id(1),
+            self.user_service.get_user_by_id(1),
             self.test_users[1]
         )

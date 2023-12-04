@@ -123,7 +123,6 @@ class CalendarView():
     def _handle_year_button_previous(self):
         previous_year = date_service.get_year_previous(self._date)
         self._state.set_current_date(previous_year)
-        print("sneed:", previous_year)
         self._show_calendar_view()
 
     def _handle_year_button_next(self):
