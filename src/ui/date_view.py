@@ -1,17 +1,21 @@
 from tkinter import ttk, constants
-from services.calendar_service import calendar_service
+from services.date_service import date_service
+from services.note_service import note_service
 
 
 class DateView():
-    def __init__(self, root, date, login_view, calendar_view, date_view):
-        self._root = root
-        self._root.title(date)
+    def __init__(self, state, root, calendar_view, date_view):
+        self._state = state
 
-        self._date = date
+        self._root = root
+
+        self._user = self._state.get_current_user()
+        self._date = self._state.get_current_date()
         self._notes = []
 
+        self._root.title(self._date)
+
         self._show_calendar_view = calendar_view
-        self._show_login_view = login_view
         self._show_date_view = date_view
 
         self._add_note_entry = None
@@ -32,20 +36,16 @@ class DateView():
     def destroy(self):
         self._main_frame.destroy()
 
-    def _log_out(self):
-        calendar_service.logout()
-        self._show_login_view()
-
     def _display_date(self):
         year, month, day = self._date.year, self._date.month, self._date.day
         date_label = ttk.Label(self._date_frame, font=(
-            "Arial", 15), text=f"{year}/{month}/{day}", 
+            "Arial", 15), text=f"{year}/{month}/{day}",
             borderwidth=1, relief="solid", anchor=constants.CENTER)
         date_label.grid(row=0, column=0, columnspan=3,
                         padx=5, pady=5, sticky=constants.NSEW)
 
     def _display_notes(self):
-        self._notes = calendar_service.get_notes_by_date(self._date)
+        self._notes = note_service.get_notes_by_date(self._user, self._date)
         if self._remove_button or self._note_label_content or self._note_label_num:
             for i, _ in enumerate(self._note_label_num):
                 self._note_label_num[i].destroy()
@@ -86,34 +86,39 @@ class DateView():
             self._handle_add_note_button())
         self._add_note_button.grid(row=len(self._notes)+1, column=2,
                                    padx=5, pady=5, sticky=constants.NSEW)
-        
+
     def _display_date_menu_buttons(self):
-        date_button_previous = ttk.Button(self._date_menu_frame, text="<", command=lambda: self._handle_date_button_previous())
-        date_button_current = ttk.Button(self._date_menu_frame, text="back", command=lambda: self._handle_calendar_view_button())
-        date_button_next = ttk.Button(self._date_menu_frame, text=">", command=lambda: self._handle_date_button_next())
+        date_button_previous = ttk.Button(
+            self._date_menu_frame, text="<", command=lambda: self._handle_date_button_previous())
+        date_button_current = ttk.Button(
+            self._date_menu_frame, text="back", command=lambda: self._handle_calendar_view_button())
+        date_button_next = ttk.Button(
+            self._date_menu_frame, text=">", command=lambda: self._handle_date_button_next())
         date_button_previous.grid(row=0, column=0, padx=5, pady=5)
         date_button_current.grid(row=0, column=1, padx=5, pady=5)
         date_button_next.grid(row=0, column=2, padx=5, pady=5)
 
     def _handle_add_note_button(self):
         note_content = self._add_note_entry.get()
-        calendar_service.add_note(self._date, note_content)
+        note_service.add_note(self._user, self._date, note_content)
         self._display_notes()
 
     def _handle_delete_note_button(self, note):
-        calendar_service.remove_note(note)
+        note_service.remove_note(note)
         self._display_notes()
 
     def _handle_date_button_previous(self):
-        yesterday = calendar_service.get_day_previous(self._date)
-        self._show_date_view(yesterday)
+        yesterday = date_service.get_day_previous(self._date)
+        self._state.set_current_date(yesterday)
+        self._show_date_view()
 
     def _handle_date_button_next(self):
-        tomorrow = calendar_service.get_day_next(self._date)
-        self._show_date_view(tomorrow)
+        tomorrow = date_service.get_day_next(self._date)
+        self._state.set_current_date(tomorrow)
+        self._show_date_view()
 
     def _handle_calendar_view_button(self):
-        self._show_calendar_view(self._date)
+        self._show_calendar_view()
 
     def _init(self):
 

@@ -2,16 +2,18 @@ import calendar
 import datetime
 from tkinter import ttk, constants
 
-from services.calendar_service import calendar_service
+from services.date_service import date_service
 
 
 class CalendarView():
-    def __init__(self, root, date_view, login_view, calendar_view, date=datetime.datetime.now()):
+    def __init__(self, state, root, date_view, login_view, calendar_view):
+        self._state = state
+
         self._root = root
         self._root.title("Calendar")
 
-        self._current_year = date.year
-        self._date = date
+        self._date = self._state.get_current_date()
+        self._current_year = self._date.year
 
         self._show_date_view = date_view
         self._show_login_view = login_view
@@ -34,12 +36,13 @@ class CalendarView():
         self._main_frame.destroy()
 
     def _log_out(self):
-        calendar_service.logout()
+        self._state.logout()
         self._show_login_view(self._menu_frame)
 
     def _show_date(self, year, month, day):
         selected_date = datetime.datetime(year, month, day)
-        self._show_date_view(selected_date)
+        self._state.set_current_date(selected_date)
+        self._show_date_view()
 
     # TODO: configuration and help
     def _display_menu(self):
@@ -51,18 +54,12 @@ class CalendarView():
             buttons[item].grid(row=0, column=i, padx=5, pady=10)
         buttons["log out"].bind("<Button-1>", lambda event: self._log_out())
 
-    # wip, should be buttons instead, not functional
     def _display_year_menu(self, year):
-#        items = ["<", year, ">"]
-#        buttons = {}
-#        for i, item in enumerate(items):
-#            buttons[item] = ttk.Button(
-#                self._year_menu_frame, text=items[i], cursor="hand2")
-#            buttons[item].grid(row=0, column=i, padx=10)
-
-        year_button_previous = ttk.Button(self._year_menu_frame, text="<", command=lambda: self._handle_year_button_previous())
+        year_button_previous = ttk.Button(
+            self._year_menu_frame, text="<", command=lambda: self._handle_year_button_previous())
         year_button_current = ttk.Button(self._year_menu_frame, text=year)
-        year_button_next = ttk.Button(self._year_menu_frame, text=">", command=lambda: self._handle_year_button_next())
+        year_button_next = ttk.Button(
+            self._year_menu_frame, text=">", command=lambda: self._handle_year_button_next())
         year_button_previous.grid(row=0, column=0, padx=5, pady=5)
         year_button_current.grid(row=0, column=1, padx=5, pady=5)
         year_button_next.grid(row=0, column=2, padx=5, pady=5)
@@ -124,12 +121,15 @@ class CalendarView():
                 row += 1
 
     def _handle_year_button_previous(self):
-        previous_year = calendar_service.get_year_previous(self._date)
-        self._show_calendar_view(previous_year)
-        
+        previous_year = date_service.get_year_previous(self._date)
+        self._state.set_current_date(previous_year)
+        print("sneed:", previous_year)
+        self._show_calendar_view()
+
     def _handle_year_button_next(self):
-        next_year = calendar_service.get_year_next(self._date)
-        self._show_calendar_view(next_year)
+        next_year = date_service.get_year_next(self._date)
+        self._state.set_current_date(next_year)
+        self._show_calendar_view()
 
     def _init(self):
         # frame for menus (configure, add/remove notes, help, logout)

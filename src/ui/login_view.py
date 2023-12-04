@@ -1,10 +1,15 @@
 from tkinter import ttk, constants
-from services.calendar_service import calendar_service, InvalidCredentialsError, UserExistsError
+from services.user_service import user_service, UserExistsError
+from services.state_service import InvalidCredentialsError
+from services.date_service import date_service
 
 
 class LoginView:
 
-    def __init__(self, root, calendar_view, menu_buttons=None):
+    def __init__(self, state, root, calendar_view, menu_buttons=None):
+        self._state = state
+        self._state.set_current_date(date_service.get_current_date())
+
         self._root = root
         self._root.title("Login")
 
@@ -69,7 +74,7 @@ class LoginView:
                           pady=5, sticky=(constants.W, constants.E))
 
     def _init(self):
-        calendar_service.logout()
+        self._state.logout()
         if self._menu_buttons:
             self._menu_buttons.destroy()
 
@@ -87,12 +92,12 @@ class LoginView:
         password = self._password_field.get()
 
         try:
-            calendar_service.login(username, password)
-            self._show_calendar_view(calendar_service.get_current_date())
+            self._state.login(username, password)
+            self._show_calendar_view()
         except InvalidCredentialsError:
             self._init_help_message("", "the password is incorrect")
             try:
-                calendar_service.add_user(username, password)
+                user_service.add_user(username, password)
                 self._init_help_message(
                     f"created account with user {username}", "click login again to log in")
             except UserExistsError:

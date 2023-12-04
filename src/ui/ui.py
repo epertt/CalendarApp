@@ -2,12 +2,14 @@ from ui.login_view import LoginView
 from ui.calendar_view import CalendarView
 from ui.date_view import DateView
 
+from services.state_service import state_service
+
 
 class UI:
     def __init__(self, root):
         self._root = root
         self._current_view = None
-        self._date = None
+        self._state = state_service
 
     def start(self):
         self._show_view_login()
@@ -20,19 +22,19 @@ class UI:
     def _show_view_login(self, menu_buttons=None):
         self._reset_view()
         self._current_view = LoginView(
-            self._root, self._show_view_calendar, menu_buttons)
+            self._state, self._root, self._show_view_calendar, menu_buttons)
         self._current_view.pack()
 
-    def _show_view_calendar(self, date):
+    def _show_view_calendar(self):
         self._reset_view()
         self._current_view = CalendarView(
-            self._root, self._show_view_date, self._show_view_login, self._show_view_calendar, date)
+            self._state, self._root, self._show_view_date, self._show_view_login, self._show_view_calendar)
         self._current_view.pack()
 
-    def _show_view_date(self, date):
+    def _show_view_date(self):
         self._reset_view()
         self._current_view = DateView(
-            self._root, date, self._show_view_login, self._show_view_calendar, self._show_view_date)
+            self._state, self._root, self._show_view_calendar, self._show_view_date)
         self._current_view.pack()
 
     def _show_view_configuration(self):
