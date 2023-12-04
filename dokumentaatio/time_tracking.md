@@ -12,3 +12,6 @@
 | 27.11| 5h   | adding more tests and refactoring parts of the code |
 | 27.11| 2h   | working on documentation (mostly package diagrams) and refactoring some parts |
 | 28.11| 1h   | fixing some ui bugs and errors |
+| 04.12| 2h   | adding year and day navigation to calendar and date views respectively |
+| 05.12| 2h   | refactoring services from a single service to multiple smaller services |
+| 05.12| 1h   | fixing tests that were failing after refactoring the services |
