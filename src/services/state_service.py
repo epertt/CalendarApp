@@ -31,7 +31,7 @@ class StateService:
 
         self.set_current_user(user)
 
-        return user
+        return self.get_current_user()
 
     def logout(self):
         self._user = None
