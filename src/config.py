@@ -7,9 +7,9 @@ env_file_path = os.path.join(root_directory, ".env")
 if os.path.isfile(env_file_path):
     config = dotenv_values(dotenv_path=env_file_path)
 else:
-    file = open(env_file_path, "w")
-    file.write("DB_FILE_NAME=db.sqlite")
-    file.close()
+    with open(env_file_path, "w", encoding='UTF-8') as file:
+        file.write("DB_FILE_NAME=db.sqlite")
+        file.close()
     config = dotenv_values(dotenv_path=env_file_path)
 
 DB_FILE_NAME = config["DB_FILE_NAME"] or "db.sqlite"
