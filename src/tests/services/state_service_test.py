@@ -1,4 +1,5 @@
 import unittest
+import datetime
 from entities.user import User
 
 from services.state_service import (
@@ -64,3 +65,12 @@ class TestStateService(unittest.TestCase):
         with self.assertRaises(InvalidCredentialsError):
             self.state_service.login(
                 self.test_users[0].username, "wrongpassword")
+
+    def test_logout(self):
+        self.state_service.logout()
+        self.assertEqual(self.state_service.get_current_user(), None)
+
+    def test_set_get_current_date(self):
+        test_date = datetime.date(2023, 3, 10)
+        self.state_service.set_current_date(test_date)
+        self.assertEqual(self.state_service.get_current_date(), test_date)
