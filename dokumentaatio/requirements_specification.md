@@ -10,7 +10,7 @@ Basic version will only have normal users that can create and delete their own a
   - [ ] delete own user
   - [ ] (*alongside all notes added the user*)
 - Calendar view that shows a 
-  - [ ] day/
+  - [x] day/
   - [ ] month/
   - [x] year view and
   - [ ] highlights days that have notes
