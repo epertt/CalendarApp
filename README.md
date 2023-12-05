@@ -39,3 +39,9 @@ Generating test coverage and displaying it in the browser:
 ```
 poetry run invoke display-coverage-report
 ```
+
+## Other:
+Running linter:
+```
+poetry run invoke lint
+```
