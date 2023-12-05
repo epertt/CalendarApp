@@ -11,3 +11,6 @@
 - Added adding and removing notes
 - Added various tests related to account creation
 - Accounts and notes are no longer cleared when program is restarted
+
+### Week 5
+- Added year and day navigation to year and date views respectively
