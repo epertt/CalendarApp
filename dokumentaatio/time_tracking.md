@@ -17,5 +17,5 @@
 | 05.12| 1h   | fixing tests that were failing after refactoring the services |
 | 12.12| 2h   | added help view |
 | 12.12| 3h   | added config view |
-| 12.12| 1h   | started on writing docstring |
-| total| 43h  | |
+| 12.12| 2h   | writing docstring |
+| total| 44h  | |
