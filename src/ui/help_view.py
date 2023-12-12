@@ -1,4 +1,4 @@
-from tkinter import ttk, constants
+from tkinter import ttk
 
 
 class HelpView:
@@ -18,7 +18,7 @@ class HelpView:
 
     def pack(self):
         self._menu_frame.pack()
-        self._help_frame.pack(fill=constants.BOTH, expand=True)
+        self._help_frame.pack()
 
     def destroy(self):
         self._menu_frame.destroy()
@@ -48,9 +48,12 @@ class HelpView:
         self._display_menu()
 
         self._init_help_labels([
+            "Features:",
             "Click on days to open date view where you can add and remove notes",
             "Click on months to open month view instead of the default year view",
             "Current day is highlighted on year and month views",
+            "Enable 'single user mode' in configuration to avoid having to log in every time",
+            "",
             "Work in progress features:",
             "Month view",
             "(Fairly limited) configuration (will be) available in configuration menu",

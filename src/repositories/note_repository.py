@@ -71,18 +71,18 @@ class NoteRepository:
 
         return self.get_note_by_id(cursor.lastrowid)
 
-    def delete_note(self, note_id):
+    def delete_note(self, note):
 
         cursor = self._connection.cursor()
 
         cursor.execute(
             'DELETE FROM notes WHERE note_id = ?',
-            (note_id,)
+            (note.note_id,)
         )
 
         self._connection.commit()
 
-        return note_id
+        return note.note_id
 
 
 note_repository = NoteRepository(get_db_connection())

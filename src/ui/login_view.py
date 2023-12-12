@@ -10,6 +10,8 @@ class LoginView:
         self._state = state
         self._state.set_current_date(date_service.get_current_date())
 
+        self._single_user = self._state.get_single_user()
+
         self._root = root
         self._root.title("Login")
 
@@ -30,6 +32,10 @@ class LoginView:
 
     def pack(self):
         self._login_frame.pack(fill=constants.BOTH, expand=True)
+
+        if self._single_user:
+            single_user = user_service.get_user_by_id(self._single_user)
+            self._handle_login(single_user.username, single_user.password)
 
     def destroy(self):
         self._login_frame.destroy()
@@ -69,9 +75,24 @@ class LoginView:
 
     def _init_buttons(self):
         login_button = ttk.Button(
-            self._login_frame, text="login", command=lambda: self._handle_login())
+            self._login_frame, text="login", command=lambda: self._handle_login(
+                self._username_field.get(), self._password_field.get()))
         login_button.grid(row=4, column=0, columnspan=3,
                           pady=5, sticky=(constants.W, constants.E))
+
+    def _handle_login(self, username, password):
+        try:
+            self._state.login(username, password)
+            self._show_calendar_view()
+        except InvalidCredentialsError:
+            self._init_help_message("", "the password is incorrect")
+            try:
+                user_service.add_user(username, password)
+                self._init_help_message(
+                    f"created account with user {username}", "click login again to log in")
+            except UserExistsError:
+                self._init_help_message(
+                    "a user with that name exists,", "but the password is incorrect")
 
     def _init(self):
         self._state.logout()
@@ -86,20 +107,3 @@ class LoginView:
         self._init_buttons()
 
         self._login_frame.columnconfigure(0, weight=1)
-
-    def _handle_login(self):
-        username = self._username_field.get()
-        password = self._password_field.get()
-
-        try:
-            self._state.login(username, password)
-            self._show_calendar_view()
-        except InvalidCredentialsError:
-            self._init_help_message("", "the password is incorrect")
-            try:
-                user_service.add_user(username, password)
-                self._init_help_message(
-                    f"created account with user {username}", "click login again to log in")
-            except UserExistsError:
-                self._init_help_message(
-                    "a user with that name exists,", "but the password is incorrect")

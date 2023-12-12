@@ -5,6 +5,7 @@ connection = get_db_connection()
 def drop_tables(cursor):
     cursor.execute("DROP TABLE IF EXISTS users;")
     cursor.execute("DROP TABLE IF EXISTS notes;")
+    cursor.execute("DROP TABLE IF EXISTS config;")
     connection.commit()
 
 
@@ -21,6 +22,12 @@ def create_tables(cursor):
         user_id INTEGER, 
         date TEXT NOT NULL, 
         content TEXT NOT NULL, 
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
+    );""")
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS config ( 
+        user_id INTEGER PRIMARY KEY, 
+        single_user INTEGER NOT NULL, 
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     );""")
     connection.commit()
