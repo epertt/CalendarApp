@@ -7,6 +7,7 @@ Basic version will only have normal users that can create and delete their own a
 - Users can
   - [x] login,
   - [x] logout,
+  - [x] stay logged in after exiting (configurable)
   - [ ] delete own user
   - [ ] (*alongside all notes added the user*)
 - Calendar view that shows a 
@@ -14,6 +15,9 @@ Basic version will only have normal users that can create and delete their own a
   - [ ] month/
   - [x] year view and
   - [ ] highlights days that have notes
+- Other views
+  - [x] help
+  - [x] config
 - Date navigation (previous/next year/month/day)
   - [x] in day view
   - [ ] in month view
