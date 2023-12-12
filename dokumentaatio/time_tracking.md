@@ -15,4 +15,7 @@
 | 04.12| 2h   | adding year and day navigation to calendar and date views respectively |
 | 05.12| 2h   | refactoring services from a single service to multiple smaller services |
 | 05.12| 1h   | fixing tests that were failing after refactoring the services |
-| total| 37h  | |
+| 12.12| 2h   | added help view |
+| 12.12| 3h   | added config view |
+| 12.12| 1h   | started on writing docstring |
+| total| 43h  | |

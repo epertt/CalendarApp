@@ -14,3 +14,7 @@
 
 ### Week 5
 - Added year and day navigation to year and date views respectively
+
+### Week 6
+- Added help page
+- Added config page and related functionality
