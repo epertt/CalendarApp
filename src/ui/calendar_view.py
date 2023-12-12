@@ -6,7 +6,7 @@ from services.date_service import date_service
 
 
 class CalendarView():
-    def __init__(self, state, root, date_view, login_view, calendar_view):
+    def __init__(self, state, root, date_view, login_view, calendar_view, help_view):
         self._state = state
 
         self._root = root
@@ -18,6 +18,7 @@ class CalendarView():
         self._show_date_view = date_view
         self._show_login_view = login_view
         self._show_calendar_view = calendar_view
+        self._show_help_view = help_view
 
         self._menu_frame = None
         self._main_frame = None
@@ -44,7 +45,6 @@ class CalendarView():
         self._state.set_current_date(selected_date)
         self._show_date_view()
 
-    # TODO: configuration and help
     def _display_menu(self):
         items = ["configuration", "help", "log out"]
         buttons = {}
@@ -53,6 +53,7 @@ class CalendarView():
                 self._menu_frame, text=item, padding=5, cursor="hand2")
             buttons[item].grid(row=0, column=i, padx=5, pady=10)
         buttons["log out"].bind("<Button-1>", lambda event: self._log_out())
+        buttons["help"].bind("<Button-1>", lambda event: self._handle_help_button())
 
     def _display_year_menu(self, year):
         year_button_previous = ttk.Button(
@@ -117,6 +118,9 @@ class CalendarView():
         next_year = date_service.get_year_next(self._date)
         self._state.set_current_date(next_year)
         self._show_calendar_view()
+
+    def _handle_help_button(self):
+        self._show_help_view()
 
     def _init(self):
         self._menu_frame = ttk.Frame(self._root, padding=10)

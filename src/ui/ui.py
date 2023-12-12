@@ -1,6 +1,7 @@
 from ui.login_view import LoginView
 from ui.calendar_view import CalendarView
 from ui.date_view import DateView
+from ui.help_view import HelpView
 
 from services.state_service import state_service
 
@@ -28,7 +29,7 @@ class UI:
     def _show_view_calendar(self):
         self._reset_view()
         self._current_view = CalendarView(
-            self._state, self._root, self._show_view_date, self._show_view_login, self._show_view_calendar)
+            self._state, self._root, self._show_view_date, self._show_view_login, self._show_view_calendar, self._show_view_help)
         self._current_view.pack()
 
     def _show_view_date(self):
@@ -41,4 +42,8 @@ class UI:
         pass
 
     def _show_view_help(self):
-        pass
+        self._reset_view()
+        self._current_view = HelpView(
+            self._state, self._root, self._show_view_calendar
+        )
+        self._current_view.pack()
