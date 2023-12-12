@@ -1,5 +1,5 @@
 class Note:
-    """Class representing a note
+    """A class representing a note
     
         Attributes:
             note_id: a unique integer identifying the note

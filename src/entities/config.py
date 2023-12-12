@@ -1,5 +1,5 @@
 class Config:
-    """Class representing a user's configuration
+    """A class representing a user's configuration
     
         Attributes:
             user_id: an integer representing user whose config is being represented

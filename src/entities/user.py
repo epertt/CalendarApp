@@ -1,5 +1,5 @@
 class User:
-    """Class representing a user
+    """A class representing a user
     
         Attributes:
             user_id: an integer representing user who is being represented
