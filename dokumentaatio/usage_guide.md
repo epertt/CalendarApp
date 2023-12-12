@@ -1,5 +1,5 @@
 #### 1. Download the latest release
-The latest release is available ["here"](https://github.com/epertt/CalendarApp/releases/latest)
+The latest release is available [here](https://github.com/epertt/CalendarApp/releases/latest)
 
 #### 2. Ensure you have the dependencies
 The program has been tested to work on

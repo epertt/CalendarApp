@@ -6,6 +6,7 @@ Simple multi-user calendar application that shows a single year, month or week, 
 - [Time tracking](./dokumentaatio/time_tracking.md)
 - [Changelog](./dokumentaatio/changelog.md)
 - [Software architecture](./dokumentaatio/arkkitehtuuri.md)
+- [Usage guide](./dokumentaatio/usage_guide.md)
 - [Known issues](./dokumentaatio/known_issues.md)
 
 ## Installation
