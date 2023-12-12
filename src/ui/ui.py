@@ -8,12 +8,16 @@ from services.state_service import state_service
 
 
 class UI:
+    """A class responsible for showing the different screens and passing around the state
+    """
     def __init__(self, root):
         self._root = root
         self._current_view = None
         self._state = state_service
 
     def start(self):
+        """Starts up the user interface
+        """
         self._show_view_login()
 
     def _reset_view(self):

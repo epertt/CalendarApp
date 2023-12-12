@@ -4,6 +4,9 @@ from services.note_service import note_service
 
 
 class DateView():
+    """A date or day view, showing a single day and the notes for that day
+    """
+
     def __init__(self, state, root, calendar_view, date_view):
         self._state = state
 
@@ -30,10 +33,14 @@ class DateView():
         self._init()
 
     def pack(self):
+        """Displays the view
+        """
         self._main_frame.pack(fill=constants.BOTH, expand=True)
         self._date_frame.pack()
 
     def destroy(self):
+        """Destroys the view
+        """
         self._main_frame.destroy()
 
     def _display_date(self):

@@ -10,11 +10,15 @@ def get_config_by_row(row, user):
 
 
 class ConfigRepository:
+    """A class responsible for config-related database actions
+    """
     def __init__(self, connection):
 
         self._connection = connection
 
     def clear_single_user(self):
+        """Sets the single user mode config option to 'off' for all users
+        """
         cursor = self._connection.cursor()
 
         cursor.execute(
@@ -25,7 +29,14 @@ class ConfigRepository:
         self._connection.commit()
 
     def set_single_user(self, user, value):
+        """Sets the 'single user mode' config option for the specified user
 
+            Args:
+                user (User): a User object representing the user whose configuration to change
+                value (String): the value to set the 'single user mode' config option to
+
+            Returns: a Config object representing the user's configuration
+        """
         cursor = self._connection.cursor()
 
         cursor.execute(
@@ -38,6 +49,11 @@ class ConfigRepository:
         return self.get_user_config(user)
 
     def get_current_single_user_id(self):
+        """Returns the user id of the user who currently has 'single user mode' turned on
+
+        Returns:
+            Integer: the user_id of the user who currently has 'single user mode' turned on
+        """
 
         cursor = self._connection.cursor()
 
@@ -51,6 +67,13 @@ class ConfigRepository:
         return row["user_id"] if row else None
 
     def get_user_config(self, user):
+        """Returns the configuration of the specified user
+
+        Args:
+            user (User): a User object representing the user whose config to look up
+
+        Returns: a Config object representing the specified user's configuration
+        """
 
         cursor = self._connection.cursor()
 

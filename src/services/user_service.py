@@ -12,6 +12,8 @@ class UserDoesNotExistError(Exception):
 
 
 class UserService:
+    """A service responsible for user-related actions
+    """
     def __init__(self, user_repository=default_user_repository):
         self._user_repository = user_repository
 

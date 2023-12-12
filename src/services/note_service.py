@@ -4,6 +4,8 @@ from repositories.note_repository import note_repository as default_note_reposit
 
 
 class NoteService:
+    """A service responsible for note-related actions
+    """
     def __init__(self, note_repository=default_note_repository):
         self._note_repository = note_repository
 

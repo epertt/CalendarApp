@@ -2,6 +2,8 @@ from repositories.config_repository import config_repository as default_config_r
 
 
 class ConfigService:
+    """A service responsible for handling configuration related actions
+    """
     def __init__(self, config_repository=default_config_repository):
         self._config_repository = config_repository
 
@@ -18,15 +20,17 @@ class ConfigService:
         return self._config_repository.set_single_user(user, value)
 
     def get_current_single_user_id(self):
-        """Returns the user id for the user that currently has the 'single user mode' config option enabled
+        """Returns the user id for the user that currently has the 'single user mode' 
+        config option enabled
 
         Returns:
-            Integer: the user id of the user that currently has the 'single user mode' config option enabled
+            Integer: the user id of the user that currently has the 'single user mode' 
+            config option enabled
         """
         return self._config_repository.get_current_single_user_id()
 
     def clear_single_user(self):
-        """Sets the 'single user mode' config option as 'off' for all users
+        """Sets the 'single user mode' config option to 'off' for all users
         """
         self._config_repository.clear_single_user()
 

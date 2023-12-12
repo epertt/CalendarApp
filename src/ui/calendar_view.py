@@ -6,6 +6,10 @@ from services.date_service import date_service
 
 
 class CalendarView():
+    """A calendar or year view, displayed when the program starts if the user
+    has enabled 'single user mode', or after the login screen otherwise
+    """
+
     def __init__(self, state, root, date_view, login_view, calendar_view, help_view, config_view):
         self._state = state
 
@@ -29,11 +33,15 @@ class CalendarView():
         self._init()
 
     def pack(self):
+        """Displays the view
+        """
         self._menu_frame.pack(side=constants.TOP,
                               fill=constants.X, expand=False)
         self._main_frame.pack(fill=constants.BOTH)
 
     def destroy(self):
+        """Destroys the view
+        """
         self._menu_frame.destroy()
         self._main_frame.destroy()
 
@@ -53,8 +61,10 @@ class CalendarView():
             buttons[item] = ttk.Button(
                 self._menu_frame, text=item, padding=5, cursor="hand2")
             buttons[item].grid(row=0, column=i, padx=5, pady=10)
-        buttons["configuration"].bind("<Button-1>", lambda event: self._handle_config_button())
-        buttons["help"].bind("<Button-1>", lambda event: self._handle_help_button())
+        buttons["configuration"].bind(
+            "<Button-1>", lambda event: self._handle_config_button())
+        buttons["help"].bind(
+            "<Button-1>", lambda event: self._handle_help_button())
         buttons["log out"].bind("<Button-1>", lambda event: self._log_out())
 
     def _display_year_menu(self, year):
@@ -131,8 +141,6 @@ class CalendarView():
         self._menu_frame = ttk.Frame(self._root, padding=10)
 
         self._main_frame = ttk.Frame(self._root, padding=10)
-
-#        self.pack()
 
         self._year_menu_frame = ttk.Frame(self._main_frame)
         self._year_menu_frame.pack()

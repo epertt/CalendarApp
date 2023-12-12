@@ -1,4 +1,11 @@
 class User:
+    """Class representing a user
+    
+        Attributes:
+            user_id: an integer representing user who is being represented
+            username: a string representing the user's username
+            password: a string representing the user's password
+    """
     def __init__(self, username, password, user_id=None):
         self.user_id = user_id
         self.username = username

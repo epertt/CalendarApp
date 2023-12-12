@@ -2,6 +2,8 @@ from tkinter import ttk
 
 
 class HelpView:
+    """A help view explaining the features of the program
+    """
 
     def __init__(self, state, root, calendar_view):
         self._state = state
@@ -17,10 +19,14 @@ class HelpView:
         self._init()
 
     def pack(self):
+        """Displays the view
+        """
         self._menu_frame.pack()
         self._help_frame.pack()
 
     def destroy(self):
+        """Destroys the view
+        """
         self._menu_frame.destroy()
         self._help_frame.destroy()
 

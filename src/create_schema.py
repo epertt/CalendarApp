@@ -3,6 +3,11 @@ connection = get_db_connection()
 
 
 def drop_tables(cursor):
+    """Removes database tables
+
+    Args:
+        cursor (Cursor): executes SQLite statements
+    """
     cursor.execute("DROP TABLE IF EXISTS users;")
     cursor.execute("DROP TABLE IF EXISTS notes;")
     cursor.execute("DROP TABLE IF EXISTS config;")
@@ -10,6 +15,11 @@ def drop_tables(cursor):
 
 
 def create_tables(cursor):
+    """Creates database tables
+
+    Args:
+        cursor (Cursor): executes SQLite statements
+    """
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         user_id INTEGER PRIMARY KEY,
@@ -34,6 +44,8 @@ def create_tables(cursor):
 
 
 def initialize_db():
+    """Initializes database by dropping existing tables and creating empty tables.
+    """
     db_cursor = connection.cursor()
     drop_tables(db_cursor)
     create_tables(db_cursor)

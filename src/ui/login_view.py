@@ -5,6 +5,9 @@ from services.date_service import date_service
 
 
 class LoginView:
+    """The login screen, displayed every time the program is sopened 
+    if the user hasn't enabled 'single user mode'
+    """
 
     def __init__(self, state, root, calendar_view, menu_buttons=None):
         self._state = state
@@ -31,6 +34,8 @@ class LoginView:
         self._init()
 
     def pack(self):
+        """Displays the view
+        """
         self._login_frame.pack(fill=constants.BOTH, expand=True)
 
         if self._single_user:
@@ -38,6 +43,8 @@ class LoginView:
             self._handle_login(single_user.username, single_user.password)
 
     def destroy(self):
+        """Destroys the view
+        """
         self._login_frame.destroy()
 
     def _init_help_message(self,

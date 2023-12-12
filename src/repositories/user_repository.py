@@ -7,6 +7,8 @@ def get_user_by_row(row):
 
 
 class UserRepository:
+    """A class responsible for user-related database actions.
+    """
     def __init__(self, connection):
 
         self._connection = connection

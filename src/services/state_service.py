@@ -7,6 +7,10 @@ class InvalidCredentialsError(Exception):
 
 
 class StateService:
+    """A service responsible for holding state data about the user currently using the program,
+    shared between multiple other views and services
+    """
+
     def __init__(self, user_repository=default_user_repository):
         self._user_repository = user_repository
         self._config_service = config_service
@@ -63,8 +67,8 @@ class StateService:
             password (String): the password of the User to log in as
 
         Raises:
-            InvalidCredentialsError: if the user supplies a password that doesn't match the username,
-            an error is raised
+            InvalidCredentialsError: if the user supplies a password that 
+            doesn't match the username, an error is raised
 
         Returns:
             User: a User object representing the user that has successfully logged in

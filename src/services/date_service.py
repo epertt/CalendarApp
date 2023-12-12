@@ -3,6 +3,9 @@ from dateutil.relativedelta import relativedelta
 
 
 class DateService:
+    """A service responsible for handling date-related actions, 
+    notably for properly handling edge cases like leap years
+    """
     def __init__(self):
         self._current_date = datetime.datetime.now()
 
