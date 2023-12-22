@@ -8,6 +8,7 @@ Simple multi-user calendar application that shows a single year, month or week, 
 - [Software architecture](./dokumentaatio/arkkitehtuuri.md)
 - [Usage guide](./dokumentaatio/usage_guide.md)
 - [Known issues](./dokumentaatio/known_issues.md)
+- [Testing document](./dokumentaatio/testing.md)
 
 ## Installation
 Requirements:
