@@ -1,5 +1,6 @@
 ### Test coverage
 ![](./images/test_coverage.png)
+
 The test coverage is about 70%. Notably lacking testing are the repository classes. The service classes are individually tested by the (for example) TestDateService for the DateService class, and so on.
 
 ### User interface
