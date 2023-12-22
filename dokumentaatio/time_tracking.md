@@ -18,4 +18,5 @@
 | 12.12| 2h   | added help view |
 | 12.12| 3h   | added config view |
 | 12.12| 4h   | writing docstring and other documentation |
-| total| 46h  | |
+| 22.12| 1h   | writing final documentation |
+| total| 47h  | |
